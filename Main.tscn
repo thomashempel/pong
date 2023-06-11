@@ -4,9 +4,10 @@
 [ext_resource type="Theme" uid="uid://c3d7wb8lffexs" path="res://my_theme.tres" id="1_jf5p3"]
 [ext_resource type="Texture2D" uid="uid://1os32lqlcro5" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="3_ft572"]
 [ext_resource type="PackedScene" uid="uid://csg4yatmsl3qc" path="res://Paddle.tscn" id="3_q0gim"]
-[ext_resource type="Script" path="res://Ball.gd" id="4_3u2ql"]
 [ext_resource type="Script" path="res://CPU.gd" id="4_ga8j1"]
+[ext_resource type="PackedScene" uid="uid://dpya430mwcamw" path="res://Ball.tscn" id="5_71pix"]
 [ext_resource type="Shader" path="res://Playfield.gdshader" id="6_5lrid"]
+[ext_resource type="PackedScene" uid="uid://c7cp3f0uvpfar" path="res://Goal.tscn" id="8_opjwm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_70dp5"]
 bg_color = Color(0, 0, 0, 1)
@@ -24,14 +25,14 @@ shadow_offset = Vector2(2, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1olx5"]
 shader = ExtResource("6_5lrid")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vnjs5"]
-size = Vector2(30, 30)
-
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" node_paths=PackedStringArray("lbl_player_score", "lbl_cpu_score", "goal_player", "goal_cpu")]
 script = ExtResource("1_i2t4i")
+lbl_player_score = NodePath("UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer/lbl_player_score")
+lbl_cpu_score = NodePath("UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer/lbl_cpu_score")
+goal_player = NodePath("PlayerGoal")
+goal_cpu = NodePath("CPUGoal")
 
 [node name="UI" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 anchors_preset = 15
@@ -42,26 +43,35 @@ grow_vertical = 2
 
 [node name="ScoreContainer" type="CenterContainer" parent="UI/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_jf5p3")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/ScoreContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/VBoxContainer/ScoreContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/ScoreContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="lbl_player_score" type="Label" parent="UI/VBoxContainer/ScoreContainer/HBoxContainer"]
+[node name="lbl_player_score" type="Label" parent="UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_jf5p3")
 text = "0"
 
-[node name="lbl_divider" type="Label" parent="UI/VBoxContainer/ScoreContainer/HBoxContainer"]
+[node name="lbl_divider" type="Label" parent="UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_jf5p3")
 text = ":"
 
-[node name="lbl_cpu_score" type="Label" parent="UI/VBoxContainer/ScoreContainer/HBoxContainer"]
+[node name="lbl_cpu_score" type="Label" parent="UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_jf5p3")
 text = "0"
 
 [node name="MenuContainer" type="CenterContainer" parent="UI/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -89,13 +99,14 @@ layout_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
 position = Vector2(960, 540)
 scale = Vector2(1.95117, 1.15039)
 texture = ExtResource("3_ft572")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_1olx5")
 anchors_preset = 15
 anchor_right = 1.0
@@ -108,22 +119,7 @@ grow_vertical = 2
 [node name="Player" parent="." instance=ExtResource("3_q0gim")]
 position = Vector2(80, 540)
 
-[node name="Ball" type="Node2D" parent="."]
-position = Vector2(960, 540)
-script = ExtResource("4_3u2ql")
-
-[node name="ColorRect" type="ColorRect" parent="Ball"]
-offset_left = -15.0
-offset_top = -15.0
-offset_right = 15.0
-offset_bottom = 15.0
-
-[node name="Area2D" type="Area2D" parent="Ball"]
-position = Vector2(-15, -15)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/Area2D"]
-position = Vector2(15, 15)
-shape = SubResource("RectangleShape2D_vnjs5")
+[node name="Ball" parent="." instance=ExtResource("5_71pix")]
 
 [node name="CPU" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("3_q0gim")]
 position = Vector2(1840, 540)
@@ -131,6 +127,12 @@ script = ExtResource("4_ga8j1")
 ball = NodePath("../Ball")
 speed = 500
 
+[node name="PlayerGoal" parent="." instance=ExtResource("8_opjwm")]
+
+[node name="CPUGoal" parent="." instance=ExtResource("8_opjwm")]
+position = Vector2(2172, 5)
+
 [connection signal="button_up" from="UI/VBoxContainer/MenuContainer/PanelContainer/VBoxContainer/btn_start" to="." method="_on_btn_start_button_up"]
 [connection signal="button_up" from="UI/VBoxContainer/MenuContainer/PanelContainer/VBoxContainer/btn_quit" to="." method="_on_btn_quit_button_up"]
-[connection signal="area_entered" from="Ball/Area2D" to="Ball" method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="PlayerGoal" to="." method="_on_player_goal_area_entered"]
+[connection signal="area_entered" from="CPUGoal" to="." method="_on_cpu_goal_area_entered"]

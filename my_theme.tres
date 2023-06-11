@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c3d7wb8lffexs"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c3d7wb8lffexs"]
+
+[ext_resource type="FontFile" uid="uid://ik4un5wgigww" path="res://m6x11.ttf" id="1_vxgnl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7txhf"]
 bg_color = Color(0, 0.662745, 0.831373, 1)
@@ -14,5 +16,7 @@ expand_margin_right = 8.0
 shadow_size = 3
 
 [resource]
+default_font = ExtResource("1_vxgnl")
+default_font_size = 128
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/styles/normal = SubResource("StyleBoxFlat_7txhf")

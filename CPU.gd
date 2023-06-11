@@ -7,7 +7,7 @@ var target:= Vector2.ZERO
 
 func _process(delta):
 	var paddel_pos: int = position.y
-	
+
 	if ball.velocity.x > 0:
 		if paddel_pos > ball.position.y:
 			paddel_pos -= speed * delta
