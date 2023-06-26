@@ -1,8 +1,10 @@
 extends Paddle
+class_name Player
 
 @export var speed: int = 20
 
 var angle: float = 0.0
+
 
 func _process(delta):
 	var paddel_pos: int = position.y

@@ -1,0 +1,159 @@
+[gd_scene load_steps=11 format=3 uid="uid://cx7j8u5bnmb8a"]
+
+[ext_resource type="Texture2D" uid="uid://vs7p7cl1hcwf" path="res://circle_01.png" id="1_nar6p"]
+[ext_resource type="Texture2D" uid="uid://b53tkihqvq0y4" path="res://star_08.png" id="2_56323"]
+
+[sub_resource type="Animation" id="Animation_re28d"]
+resource_name = "explode"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle01:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(2.46229, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(4, 4), Vector2(10, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Circle01:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(2, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lr2tc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle01:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Circle01:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_25flp"]
+_data = {
+"RESET": SubResource("Animation_lr2tc"),
+"explode": SubResource("Animation_re28d")
+}
+
+[sub_resource type="Gradient" id="Gradient_pn7vi"]
+interpolation_mode = 2
+colors = PackedColorArray(0, 0.941176, 0.329412, 1, 0.673809, 0.00163692, 0.839233, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qt3rs"]
+gradient = SubResource("Gradient_pn7vi")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_68dq2"]
+_data = [Vector2(0, 0.225898), 0.0, 0.877427, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_oeaqo"]
+curve = SubResource("Curve_68dq2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_inrxv"]
+lifetime_randomness = 0.9
+particle_flag_disable_z = true
+direction = Vector3(-1, 2.08165e-12, 2.08165e-12)
+spread = 100.0
+gravity = Vector3(2.08165e-12, 1500, 2.08165e-12)
+initial_velocity_min = 600.0
+initial_velocity_max = 1500.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_oeaqo")
+color_ramp = SubResource("GradientTexture1D_qt3rs")
+turbulence_noise_speed = Vector3(20, 100, 0.5)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "explode"
+libraries = {
+"": SubResource("AnimationLibrary_25flp")
+}
+
+[node name="Circle01" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("1_nar6p")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 150
+process_material = SubResource("ParticleProcessMaterial_inrxv")
+texture = ExtResource("2_56323")
+lifetime = 1.2
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 0
+interpolate = false
+fract_delta = false
+trail_enabled = true

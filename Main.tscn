@@ -1,103 +1,99 @@
-[gd_scene load_steps=11 format=3 uid="uid://bre8xg7jq0x8y"]
+[gd_scene load_steps=10 format=3 uid="uid://bre8xg7jq0x8y"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_i2t4i"]
 [ext_resource type="Theme" uid="uid://c3d7wb8lffexs" path="res://my_theme.tres" id="1_jf5p3"]
+[ext_resource type="PackedScene" uid="uid://cx7j8u5bnmb8a" path="res://particles.tscn" id="2_nkntg"]
+[ext_resource type="PackedScene" uid="uid://c7hd0q5kmlwi3" path="res://ui/win_screen.tscn" id="2_wmx2x"]
 [ext_resource type="Texture2D" uid="uid://1os32lqlcro5" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="3_ft572"]
 [ext_resource type="PackedScene" uid="uid://csg4yatmsl3qc" path="res://Paddle.tscn" id="3_q0gim"]
 [ext_resource type="Script" path="res://CPU.gd" id="4_ga8j1"]
 [ext_resource type="PackedScene" uid="uid://dpya430mwcamw" path="res://Ball.tscn" id="5_71pix"]
-[ext_resource type="Shader" path="res://Playfield.gdshader" id="6_5lrid"]
 [ext_resource type="PackedScene" uid="uid://c7cp3f0uvpfar" path="res://Goal.tscn" id="8_opjwm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_70dp5"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-corner_radius_top_left = 8
-corner_radius_bottom_right = 8
-expand_margin_left = 16.0
-expand_margin_top = 16.0
-expand_margin_right = 16.0
-expand_margin_bottom = 16.0
-shadow_size = 3
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1olx5"]
-shader = ExtResource("6_5lrid")
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("lbl_player_score", "lbl_cpu_score", "goal_player", "goal_cpu")]
 script = ExtResource("1_i2t4i")
-lbl_player_score = NodePath("UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer/lbl_player_score")
-lbl_cpu_score = NodePath("UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer/lbl_cpu_score")
-goal_player = NodePath("PlayerGoal")
-goal_cpu = NodePath("CPUGoal")
+lbl_player_score = NodePath("UI/HBoxContainer/lbl_player_score")
+lbl_cpu_score = NodePath("UI/HBoxContainer/lbl_cpu_score")
+goal_player = NodePath("GoalPlayer")
+goal_cpu = NodePath("GoalCPU")
+win_particles = ExtResource("2_nkntg")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="WinScreen" parent="UI" instance=ExtResource("2_wmx2x")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -84.5
+offset_right = 132.0
+offset_bottom = 84.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScoreContainer" type="CenterContainer" parent="UI/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_jf5p3")
+[node name="MenuMain" type="PanelContainer" parent="UI"]
+unique_name_in_owner = true
+offset_left = 820.0
+offset_top = 404.5
+offset_right = 1100.0
+offset_bottom = 675.5
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/VBoxContainer/ScoreContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MenuMain"]
 layout_mode = 2
-theme_override_constants/margin_top = 32
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/ScoreContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="lbl_player_score" type="Label" parent="UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_jf5p3")
-text = "0"
-
-[node name="lbl_divider" type="Label" parent="UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_jf5p3")
-text = ":"
-
-[node name="lbl_cpu_score" type="Label" parent="UI/VBoxContainer/ScoreContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_jf5p3")
-text = "0"
-
-[node name="MenuContainer" type="CenterContainer" parent="UI/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="PanelContainer" type="PanelContainer" parent="UI/VBoxContainer/MenuContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_70dp5")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/MenuContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MenuMain/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="btn_start" type="Button" parent="UI/VBoxContainer/MenuContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="UI/MenuMain/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 128
+text = "PONG!"
+horizontal_alignment = 1
+
+[node name="btn_start" type="Button" parent="UI/MenuMain/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_jf5p3")
 text = "Start"
 
-[node name="btn_quit" type="Button" parent="UI/VBoxContainer/MenuContainer/PanelContainer/VBoxContainer"]
+[node name="btn_quit" type="Button" parent="UI/MenuMain/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_jf5p3")
 text = "Quit"
 
-[node name="Panel" type="Panel" parent="UI/VBoxContainer/MenuContainer"]
-layout_mode = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_right = 72.0
+offset_bottom = 115.0
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="lbl_player_score" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 128
+text = "0"
+
+[node name="lbl_divider" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 128
+text = ":"
+
+[node name="lbl_cpu_score" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 128
+text = "0"
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -105,34 +101,27 @@ position = Vector2(960, 540)
 scale = Vector2(1.95117, 1.15039)
 texture = ExtResource("3_ft572")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_1olx5")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Player" parent="." instance=ExtResource("3_q0gim")]
 position = Vector2(80, 540)
 
 [node name="Ball" parent="." instance=ExtResource("5_71pix")]
+visible = false
+position = Vector2(960, 540)
 
 [node name="CPU" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("3_q0gim")]
 position = Vector2(1840, 540)
 script = ExtResource("4_ga8j1")
 ball = NodePath("../Ball")
-speed = 500
+max_speed = 300
 
-[node name="PlayerGoal" parent="." instance=ExtResource("8_opjwm")]
+[node name="GoalPlayer" parent="." instance=ExtResource("8_opjwm")]
+id = "player"
 
-[node name="CPUGoal" parent="." instance=ExtResource("8_opjwm")]
+[node name="GoalCPU" parent="." instance=ExtResource("8_opjwm")]
 position = Vector2(2172, 5)
 
-[connection signal="button_up" from="UI/VBoxContainer/MenuContainer/PanelContainer/VBoxContainer/btn_start" to="." method="_on_btn_start_button_up"]
-[connection signal="button_up" from="UI/VBoxContainer/MenuContainer/PanelContainer/VBoxContainer/btn_quit" to="." method="_on_btn_quit_button_up"]
-[connection signal="area_entered" from="PlayerGoal" to="." method="_on_player_goal_area_entered"]
-[connection signal="area_entered" from="CPUGoal" to="." method="_on_cpu_goal_area_entered"]
+[connection signal="restart" from="UI/WinScreen" to="." method="_on_win_screen_restart"]
+[connection signal="button_up" from="UI/MenuMain/MarginContainer/VBoxContainer/btn_start" to="." method="_on_btn_start_button_up"]
+[connection signal="button_up" from="UI/MenuMain/MarginContainer/VBoxContainer/btn_quit" to="." method="_on_btn_quit_button_up"]
+[connection signal="area_entered" from="GoalPlayer" to="." method="_on_player_goal_area_entered"]
+[connection signal="area_entered" from="GoalCPU" to="." method="_on_cpu_goal_area_entered"]

@@ -6,7 +6,6 @@
 size = Vector2(30, 30)
 
 [node name="Ball" type="Node2D"]
-position = Vector2(960, 540)
 script = ExtResource("1_f43j3")
 
 [node name="ColorRect" type="ColorRect" parent="."]

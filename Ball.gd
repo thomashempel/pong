@@ -41,10 +41,11 @@ func start():
 
 func _on_area_2d_area_entered(area):
 	if area.get_parent().position.y > position.y:
-		velocity.y -= randi_range(15, 50)
-	elif area.get_parent().position.y < position.y:
-		velocity.y += randi_range(15, 50)
+		velocity.y -= randi_range(50, 200)
 
-	speed = clampi(speed + 5, 0, max_speed)
+	elif area.get_parent().position.y < position.y:
+		velocity.y += randi_range(50, 200)
+
+	speed = clampi(speed + 15, 0, max_speed)
 	direction *= -1
 	velocity.x = speed * direction
