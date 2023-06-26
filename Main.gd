@@ -16,6 +16,8 @@ class_name World
 @onready var player = $Player
 @onready var cpu = $CPU
 
+@onready var camera = %Camera
+
 @export_range(1, 21) var winning_score: int = 3
 
 enum GameState {
@@ -64,12 +66,12 @@ func play():
 	game_state = GameState.PLAYING
 
 
-func check_score(score: int, name: String):
+func check_score(score: int, for_name: String):
 	ball.reset()
 	game_state = GameState.READY
 
 	if score >= winning_score:
-		%WinScreen.show_with_winner(name)
+		%WinScreen.show_with_winner(for_name)
 		reset()
 
 
@@ -97,6 +99,8 @@ func _on_player_goal_area_entered(area):
 		p_instance.scale.x = -1
 
 		score_cpu += 1
+		camera.set_shake(1.0)
+
 		lbl_cpu_score.text = str(score_cpu)
 		check_score(score_cpu, "CPU")
 
@@ -108,9 +112,14 @@ func _on_cpu_goal_area_entered(area):
 		p_instance.global_position = area.get_parent().global_position
 
 		score_player += 1
+		camera.set_shake(1.0)
 		lbl_player_score.text = str(score_player)
 		check_score(score_player, "Player")
 
 
 func _on_win_screen_restart():
 	play()
+
+
+func _on_ball_ball_hit():
+	camera.set_shake()

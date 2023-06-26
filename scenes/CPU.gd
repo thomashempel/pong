@@ -7,7 +7,7 @@ var target:= Vector2.ZERO
 
 
 func _process(delta):
-	var paddel_pos: int = position.y
+	paddel_pos = position.y
 
 	if ball.velocity.x > 0:
 		var speed = randi_range(100, max_speed)

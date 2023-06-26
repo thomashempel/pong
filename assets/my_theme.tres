@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=5 format=3 uid="uid://c3d7wb8lffexs"]
 
-[ext_resource type="Texture2D" uid="uid://dlr5etlbagwqr" path="res://uipackSpace_sheet.png" id="1_j8te2"]
-[ext_resource type="FontFile" uid="uid://ik4un5wgigww" path="res://m6x11.ttf" id="2_icvga"]
+[ext_resource type="Texture2D" uid="uid://dlr5etlbagwqr" path="res://assets/uipackSpace_sheet.png" id="1_j8te2"]
+[ext_resource type="FontFile" uid="uid://ik4un5wgigww" path="res://assets/m6x11.ttf" id="2_icvga"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sfp0m"]
 texture = ExtResource("1_j8te2")

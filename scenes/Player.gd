@@ -6,8 +6,8 @@ class_name Player
 var angle: float = 0.0
 
 
-func _process(delta):
-	var paddel_pos: int = position.y
+func _process(_delta):
+	paddel_pos = position.y
 
 	if Input.is_action_pressed("ui_up"):
 		paddel_pos -= speed

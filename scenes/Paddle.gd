@@ -5,13 +5,14 @@ class_name Paddle
 
 var field_size := Vector2.ZERO
 var half_height: int = 0
-var paddel_pos: int = 0
+var paddel_pos: float = 0.0
 var velocity: float = 0.0
 
 
 func _ready():
 	field_size = get_viewport_rect().size
-	half_height = size.y / 2
+	@warning_ignore("integer_division")
+	half_height = int(size.y / 2)
 
 
 func reset():

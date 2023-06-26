@@ -49,3 +49,5 @@ func _on_area_2d_area_entered(area):
 	speed = clampi(speed + 15, 0, max_speed)
 	direction *= -1
 	velocity.x = speed * direction
+
+	ball_hit.emit()

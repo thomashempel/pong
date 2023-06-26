@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://csg4yatmsl3qc"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_emi1h"]
+[ext_resource type="Script" path="res://scenes/Player.gd" id="1_3hc2o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5qusr"]
 size = Vector2(50, 200)
 
 [node name="Paddle" type="Node2D"]
 position = Vector2(2.08165e-12, 2.08165e-12)
-script = ExtResource("1_emi1h")
+script = ExtResource("1_3hc2o")
 size = Vector2(50, 200)
 
 [node name="ColorRect" type="ColorRect" parent="."]

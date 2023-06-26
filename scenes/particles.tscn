@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cx7j8u5bnmb8a"]
 
-[ext_resource type="Texture2D" uid="uid://vs7p7cl1hcwf" path="res://circle_01.png" id="1_nar6p"]
-[ext_resource type="Texture2D" uid="uid://b53tkihqvq0y4" path="res://star_08.png" id="2_56323"]
+[ext_resource type="Texture2D" uid="uid://vs7p7cl1hcwf" path="res://assets/circle_01.png" id="1_rmm7q"]
+[ext_resource type="Texture2D" uid="uid://b53tkihqvq0y4" path="res://assets/star_08.png" id="2_3vhvy"]
 
 [sub_resource type="Animation" id="Animation_re28d"]
 resource_name = "explode"
@@ -143,13 +143,13 @@ libraries = {
 
 [node name="Circle01" type="Sprite2D" parent="."]
 scale = Vector2(1e-05, 1e-05)
-texture = ExtResource("1_nar6p")
+texture = ExtResource("1_rmm7q")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 150
 process_material = SubResource("ParticleProcessMaterial_inrxv")
-texture = ExtResource("2_56323")
+texture = ExtResource("2_3vhvy")
 lifetime = 1.2
 one_shot = true
 explosiveness = 1.0

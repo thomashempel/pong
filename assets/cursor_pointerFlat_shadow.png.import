@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b53tkihqvq0y4"
-path="res://.godot/imported/star_08.png-369d9aad247d0d9dc75c4607338e01c3.ctex"
+uid="uid://clpbdfg8jap0h"
+path="res://.godot/imported/cursor_pointerFlat_shadow.png-5e9d490fa0576f548eed8f8a7e360412.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://star_08.png"
-dest_files=["res://.godot/imported/star_08.png-369d9aad247d0d9dc75c4607338e01c3.ctex"]
+source_file="res://assets/cursor_pointerFlat_shadow.png"
+dest_files=["res://.godot/imported/cursor_pointerFlat_shadow.png-5e9d490fa0576f548eed8f8a7e360412.ctex"]
 
 [params]
 
