@@ -97,13 +97,13 @@ func _input(event):
 			play()
 
 
-func _on_btn_start_button_up():
+func _on_start():
 	ui.visible = false
 	ball.visible = true
 	play()
 
 
-func _on_btn_quit_button_up():
+func _on_quit():
 	get_tree().quit()
 
 

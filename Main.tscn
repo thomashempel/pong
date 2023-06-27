@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://1os32lqlcro5" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="3_ft572"]
 [ext_resource type="PackedScene" uid="uid://csg4yatmsl3qc" path="res://scenes/Paddle.tscn" id="3_q0gim"]
 [ext_resource type="Script" path="res://scenes/CPU.gd" id="4_ga8j1"]
-[ext_resource type="Theme" uid="uid://dxxd73n0b5o3j" path="res://assets/my_theme.tres" id="4_gg6lf"]
 [ext_resource type="AudioStream" uid="uid://kkcrpkmblxmd" path="res://assets/audio/voice_over/go.ogg" id="4_sxxrc"]
 [ext_resource type="PackedScene" uid="uid://bvrcm6g6xoxxi" path="res://scenes/Ball.tscn" id="5_71pix"]
 [ext_resource type="AudioStream" uid="uid://cel8s38diaho" path="res://assets/audio/voice_over/you_win.ogg" id="5_ibcup"]
@@ -15,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://c5gt56vfmb63n" path="res://assets/audio/music/Barroom Ballet.mp3" id="6_yjlon"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="7_3uptu"]
 [ext_resource type="PackedScene" uid="uid://c7cp3f0uvpfar" path="res://scenes/Goal.tscn" id="8_opjwm"]
+[ext_resource type="PackedScene" uid="uid://u6ft6tmxvchg" path="res://ui/menu_main.tscn" id="9_ym3ih"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="12_amtqy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vw24b"]
@@ -43,8 +43,8 @@ shader_parameter/vignette_opacity = 0.8
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("lbl_player_score", "lbl_cpu_score", "goal_player", "goal_cpu")]
 script = ExtResource("1_i2t4i")
-lbl_player_score = NodePath("UI/MarginContainer/CenterContainer/HBoxContainer/lbl_player_score")
-lbl_cpu_score = NodePath("UI/MarginContainer/CenterContainer/HBoxContainer/lbl_cpu_score")
+lbl_player_score = NodePath("UI/ScoreContainer/HBoxContainer/lbl_player_score")
+lbl_cpu_score = NodePath("UI/ScoreContainer/HBoxContainer/lbl_cpu_score")
 goal_player = NodePath("GoalPlayer")
 goal_cpu = NodePath("GoalCPU")
 win_particles = ExtResource("2_nkntg")
@@ -80,50 +80,10 @@ offset_bottom = 84.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuMain" type="PanelContainer" parent="UI"]
+[node name="MenuMain" parent="UI" instance=ExtResource("9_ym3ih")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(440, 334)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -167.0
-offset_right = 220.0
-offset_bottom = 167.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MenuMain"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MenuMain/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="Label" type="Label" parent="UI/MenuMain/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 128
-text = "PONG!"
-horizontal_alignment = 1
-
-[node name="btn_start" type="Button" parent="UI/MenuMain/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_gg6lf")
-text = "Start"
-
-[node name="btn_quit" type="Button" parent="UI/MenuMain/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_gg6lf")
-text = "Quit"
-
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
+[node name="ScoreContainer" type="MarginContainer" parent="UI"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -136,24 +96,22 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ScoreContainer"]
 layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/CenterContainer"]
-layout_mode = 2
+alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="lbl_player_score" type="Label" parent="UI/MarginContainer/CenterContainer/HBoxContainer"]
+[node name="lbl_player_score" type="Label" parent="UI/ScoreContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = "0"
 
-[node name="lbl_divider" type="Label" parent="UI/MarginContainer/CenterContainer/HBoxContainer"]
+[node name="lbl_divider" type="Label" parent="UI/ScoreContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = ":"
 
-[node name="lbl_cpu_score" type="Label" parent="UI/MarginContainer/CenterContainer/HBoxContainer"]
+[node name="lbl_cpu_score" type="Label" parent="UI/ScoreContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = "0"
@@ -167,8 +125,8 @@ bus = &"Music"
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(960, 540)
-scale = Vector2(1.95117, 1.15039)
+position = Vector2(955, 540)
+scale = Vector2(2.09863, 2.09863)
 texture = ExtResource("3_ft572")
 
 [node name="Player" parent="." instance=ExtResource("3_q0gim")]
@@ -197,8 +155,8 @@ editor_draw_screen = false
 script = ExtResource("12_amtqy")
 
 [connection signal="restart" from="UI/WinScreen" to="." method="_on_win_screen_restart"]
-[connection signal="button_up" from="UI/MenuMain/MarginContainer/VBoxContainer/btn_start" to="." method="_on_btn_start_button_up"]
-[connection signal="button_up" from="UI/MenuMain/MarginContainer/VBoxContainer/btn_quit" to="." method="_on_btn_quit_button_up"]
+[connection signal="quit" from="UI/MenuMain" to="." method="_on_quit"]
+[connection signal="start" from="UI/MenuMain" to="." method="_on_start"]
 [connection signal="ball_hit" from="Ball" to="." method="_on_ball_ball_hit"]
 [connection signal="area_entered" from="GoalPlayer" to="." method="_on_player_goal_area_entered"]
 [connection signal="area_entered" from="GoalCPU" to="." method="_on_cpu_goal_area_entered"]
