@@ -10,6 +10,12 @@ class_name World
 
 @export var win_particles: PackedScene
 
+@export_group("Audio")
+@export var audio_explosion: AudioStream
+@export var audio_start: AudioStream
+@export var audio_win: AudioStream
+@export var audio_loose: AudioStream
+
 @onready var ui = %MenuMain
 
 @onready var ball = $Ball
@@ -17,9 +23,9 @@ class_name World
 @onready var cpu = $CPU
 
 @onready var camera = %Camera
-@onready var audio_player = $ExplosionPlayer
+@onready var sfx_player = $SfxPlayer
 
-@export_range(1, 21) var winning_score: int = 3
+@export_range(1, 21) var winning_score: int = 1
 
 enum GameState {
 	READY,
@@ -65,6 +71,7 @@ func play():
 	ball.start()
 	ball.visible = true
 	game_state = GameState.PLAYING
+	play_sfx(audio_start)
 
 
 func check_score(score: int, for_name: String):
@@ -72,6 +79,11 @@ func check_score(score: int, for_name: String):
 	game_state = GameState.READY
 
 	if score >= winning_score:
+		if for_name == "CPU":
+			play_sfx(audio_loose)
+		else:
+			play_sfx(audio_win)
+			
 		%WinScreen.show_with_winner(for_name)
 		reset()
 
@@ -101,8 +113,7 @@ func _on_player_goal_area_entered(area):
 
 		score_cpu += 1
 		camera.set_shake(1.0)
-		audio_player.stop()
-		audio_player.play()
+		play_sfx(audio_explosion)
 
 		lbl_cpu_score.text = str(score_cpu)
 		check_score(score_cpu, "CPU")
@@ -116,8 +127,7 @@ func _on_cpu_goal_area_entered(area):
 
 		score_player += 1
 		camera.set_shake(1.0)
-		audio_player.stop()
-		audio_player.play()
+		play_sfx(audio_explosion)
 		
 		lbl_player_score.text = str(score_player)
 		check_score(score_player, "Player")
@@ -129,3 +139,8 @@ func _on_win_screen_restart():
 
 func _on_ball_ball_hit(strength: float):
 	camera.set_shake(strength)
+
+
+func play_sfx(audio: AudioStream) -> void:
+	sfx_player.stream = audio
+	sfx_player.play()
