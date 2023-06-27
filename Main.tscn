@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bre8xg7jq0x8y"]
+[gd_scene load_steps=18 format=3 uid="uid://bre8xg7jq0x8y"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_i2t4i"]
 [ext_resource type="PackedScene" path="res://scenes/particles.tscn" id="2_nkntg"]
@@ -13,8 +13,33 @@
 [ext_resource type="AudioStream" uid="uid://7sm8rkai8hg2" path="res://assets/audio/sfx/big-impact-7054.mp3" id="5_j3nkt"]
 [ext_resource type="AudioStream" uid="uid://1c6bgjni2rr3" path="res://assets/audio/voice_over/you_lose.ogg" id="6_3qcca"]
 [ext_resource type="AudioStream" uid="uid://c5gt56vfmb63n" path="res://assets/audio/music/Barroom Ballet.mp3" id="6_yjlon"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="7_3uptu"]
 [ext_resource type="PackedScene" uid="uid://c7cp3f0uvpfar" path="res://scenes/Goal.tscn" id="8_opjwm"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="12_amtqy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vw24b"]
+shader = ExtResource("7_3uptu")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/vignette_opacity = 0.8
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("lbl_player_score", "lbl_cpu_score", "goal_player", "goal_cpu")]
 script = ExtResource("1_i2t4i")
@@ -28,7 +53,17 @@ audio_start = ExtResource("4_sxxrc")
 audio_win = ExtResource("5_ibcup")
 audio_loose = ExtResource("6_3qcca")
 
+[node name="CrtShader" type="ColorRect" parent="."]
+visible = false
+top_level = true
+material = SubResource("ShaderMaterial_vw24b")
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="UI" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
 [node name="WinScreen" parent="UI" instance=ExtResource("2_wmx2x")]
 unique_name_in_owner = true
