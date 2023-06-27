@@ -17,6 +17,7 @@ class_name World
 @onready var cpu = $CPU
 
 @onready var camera = %Camera
+@onready var audio_player = $ExplosionPlayer
 
 @export_range(1, 21) var winning_score: int = 3
 
@@ -100,6 +101,8 @@ func _on_player_goal_area_entered(area):
 
 		score_cpu += 1
 		camera.set_shake(1.0)
+		audio_player.stop()
+		audio_player.play()
 
 		lbl_cpu_score.text = str(score_cpu)
 		check_score(score_cpu, "CPU")
@@ -113,6 +116,9 @@ func _on_cpu_goal_area_entered(area):
 
 		score_player += 1
 		camera.set_shake(1.0)
+		audio_player.stop()
+		audio_player.play()
+		
 		lbl_player_score.text = str(score_player)
 		check_score(score_player, "Player")
 
@@ -121,5 +127,5 @@ func _on_win_screen_restart():
 	play()
 
 
-func _on_ball_ball_hit():
-	camera.set_shake()
+func _on_ball_ball_hit(strength: float):
+	camera.set_shake(strength)

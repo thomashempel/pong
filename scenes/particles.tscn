@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cx7j8u5bnmb8a"]
+[gd_scene load_steps=11 format=3]
 
-[ext_resource type="Texture2D" uid="uid://vs7p7cl1hcwf" path="res://assets/circle_01.png" id="1_rmm7q"]
-[ext_resource type="Texture2D" uid="uid://b53tkihqvq0y4" path="res://assets/star_08.png" id="2_3vhvy"]
+[ext_resource type="Texture2D" uid="uid://vs7p7cl1hcwf" path="res://assets/sprites/circle_01.png" id="1_rmm7q"]
+[ext_resource type="Texture2D" uid="uid://b53tkihqvq0y4" path="res://assets/sprites/star_08.png" id="2_3vhvy"]
 
 [sub_resource type="Animation" id="Animation_re28d"]
 resource_name = "explode"

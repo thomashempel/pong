@@ -1,9 +1,11 @@
 extends Node2D
 class_name Ball
 
-signal ball_hit
+signal ball_hit(strength: float)
 
-#@onready var world: World
+@export var sounds: Array[AudioStreamOggVorbis] = []
+
+@onready var player: AudioStreamPlayer = $AudioStreamPlayer
 
 var velocity := Vector2.ZERO
 var start_speed := 600
@@ -11,6 +13,7 @@ var max_speed := 800
 var speed := 0
 var direction := 1
 var field_size := Vector2.ZERO
+
 
 func _ready():
 	randomize()
@@ -20,6 +23,7 @@ func _ready():
 func _process(delta):
 	if position.y <= 15 or position.y > field_size.y - 15:
 		velocity.y *= -1
+		ball_collided(0.3)
 
 	position += velocity * delta
 
@@ -50,4 +54,13 @@ func _on_area_2d_area_entered(area):
 	direction *= -1
 	velocity.x = speed * direction
 
-	ball_hit.emit()
+	ball_collided(0.4)
+	
+
+func ball_collided(strength: float) -> void:
+	var sound = sounds.pick_random()
+	player.stop()
+	player.stream = sound
+	player.play()
+	
+	ball_hit.emit(strength)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c5gt56vfmb63n"
+path="res://.godot/imported/Barroom Ballet.mp3-abd40839d41ece4b0b249085d46c425f.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/Barroom Ballet.mp3"
+dest_files=["res://.godot/imported/Barroom Ballet.mp3-abd40839d41ece4b0b249085d46c425f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

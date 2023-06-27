@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpya430mwcamw"]
+[gd_scene load_steps=8 format=3 uid="uid://bvrcm6g6xoxxi"]
 
 [ext_resource type="Script" path="res://scenes/Ball.gd" id="1_ynrpq"]
+[ext_resource type="AudioStream" uid="uid://coytat5o6p2cr" path="res://assets/audio/sfx/impactMetal_light_000.ogg" id="2_4k8gl"]
+[ext_resource type="AudioStream" uid="uid://c3y7xbhe4ciw1" path="res://assets/audio/sfx/impactMetal_light_001.ogg" id="3_djcox"]
+[ext_resource type="AudioStream" uid="uid://dj86bp817pt1s" path="res://assets/audio/sfx/impactMetal_light_002.ogg" id="4_qwrmg"]
+[ext_resource type="AudioStream" uid="uid://b053dkqh8vxww" path="res://assets/audio/sfx/impactMetal_light_003.ogg" id="5_yn17p"]
+[ext_resource type="AudioStream" uid="uid://b0rw1n46qw0on" path="res://assets/audio/sfx/impactMetal_light_004.ogg" id="6_dwfso"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vnjs5"]
 size = Vector2(30, 30)
 
 [node name="Ball" type="Node2D"]
 script = ExtResource("1_ynrpq")
+sounds = Array[AudioStreamOggVorbis]([ExtResource("2_4k8gl"), ExtResource("3_djcox"), ExtResource("4_qwrmg"), ExtResource("5_yn17p"), ExtResource("6_dwfso")])
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -15.0

@@ -1,20 +1,22 @@
-[gd_scene load_steps=11 format=3 uid="uid://bre8xg7jq0x8y"]
+[gd_scene load_steps=13 format=3 uid="uid://bre8xg7jq0x8y"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_i2t4i"]
-[ext_resource type="PackedScene" uid="uid://cx7j8u5bnmb8a" path="res://scenes/particles.tscn" id="2_nkntg"]
+[ext_resource type="PackedScene" path="res://scenes/particles.tscn" id="2_nkntg"]
 [ext_resource type="PackedScene" uid="uid://c7hd0q5kmlwi3" path="res://ui/win_screen.tscn" id="2_wmx2x"]
 [ext_resource type="Texture2D" uid="uid://1os32lqlcro5" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="3_ft572"]
 [ext_resource type="PackedScene" uid="uid://csg4yatmsl3qc" path="res://scenes/Paddle.tscn" id="3_q0gim"]
 [ext_resource type="Script" path="res://scenes/CPU.gd" id="4_ga8j1"]
-[ext_resource type="Theme" uid="uid://c3d7wb8lffexs" path="res://assets/my_theme.tres" id="4_gg6lf"]
-[ext_resource type="PackedScene" uid="uid://dpya430mwcamw" path="res://scenes/Ball.tscn" id="5_71pix"]
+[ext_resource type="Theme" uid="uid://dxxd73n0b5o3j" path="res://assets/my_theme.tres" id="4_gg6lf"]
+[ext_resource type="PackedScene" uid="uid://bvrcm6g6xoxxi" path="res://scenes/Ball.tscn" id="5_71pix"]
+[ext_resource type="AudioStream" uid="uid://7sm8rkai8hg2" path="res://assets/audio/sfx/big-impact-7054.mp3" id="5_j3nkt"]
+[ext_resource type="AudioStream" uid="uid://c5gt56vfmb63n" path="res://assets/audio/music/Barroom Ballet.mp3" id="6_yjlon"]
 [ext_resource type="PackedScene" uid="uid://c7cp3f0uvpfar" path="res://scenes/Goal.tscn" id="8_opjwm"]
-[ext_resource type="Script" path="res://Camera.gd" id="10_yntuc"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="12_amtqy"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("lbl_player_score", "lbl_cpu_score", "goal_player", "goal_cpu")]
 script = ExtResource("1_i2t4i")
-lbl_player_score = NodePath("UI/HBoxContainer/lbl_player_score")
-lbl_cpu_score = NodePath("UI/HBoxContainer/lbl_cpu_score")
+lbl_player_score = NodePath("UI/MarginContainer/CenterContainer/HBoxContainer/lbl_player_score")
+lbl_cpu_score = NodePath("UI/MarginContainer/CenterContainer/HBoxContainer/lbl_cpu_score")
 goal_player = NodePath("GoalPlayer")
 goal_cpu = NodePath("GoalCPU")
 win_particles = ExtResource("2_nkntg")
@@ -38,10 +40,18 @@ grow_vertical = 2
 
 [node name="MenuMain" type="PanelContainer" parent="UI"]
 unique_name_in_owner = true
-offset_left = 820.0
-offset_top = 404.5
-offset_right = 1100.0
-offset_bottom = 675.5
+custom_minimum_size = Vector2(440, 334)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -167.0
+offset_right = 220.0
+offset_bottom = 167.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/MenuMain"]
 layout_mode = 2
@@ -71,30 +81,48 @@ layout_mode = 2
 theme = ExtResource("4_gg6lf")
 text = "Quit"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -72.0
-offset_right = 72.0
-offset_bottom = 115.0
+offset_left = -94.5
+offset_right = 94.5
+offset_bottom = 178.0
 grow_horizontal = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/CenterContainer"]
+layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="lbl_player_score" type="Label" parent="UI/HBoxContainer"]
+[node name="lbl_player_score" type="Label" parent="UI/MarginContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = "0"
 
-[node name="lbl_divider" type="Label" parent="UI/HBoxContainer"]
+[node name="lbl_divider" type="Label" parent="UI/MarginContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = ":"
 
-[node name="lbl_cpu_score" type="Label" parent="UI/HBoxContainer"]
+[node name="lbl_cpu_score" type="Label" parent="UI/MarginContainer/CenterContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = "0"
+
+[node name="ExplosionPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_j3nkt")
+bus = &"Hall"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_yjlon")
+bus = &"Music"
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -119,12 +147,13 @@ max_speed = 300
 id = "player"
 
 [node name="GoalCPU" parent="." instance=ExtResource("8_opjwm")]
-position = Vector2(2172, 5)
+position = Vector2(2182, 1)
 
 [node name="Camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(960, 540)
-script = ExtResource("10_yntuc")
+editor_draw_screen = false
+script = ExtResource("12_amtqy")
 
 [connection signal="restart" from="UI/WinScreen" to="." method="_on_win_screen_restart"]
 [connection signal="button_up" from="UI/MenuMain/MarginContainer/VBoxContainer/btn_start" to="." method="_on_btn_start_button_up"]

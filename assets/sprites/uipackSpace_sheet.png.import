@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clpbdfg8jap0h"
-path="res://.godot/imported/cursor_pointerFlat_shadow.png-5e9d490fa0576f548eed8f8a7e360412.ctex"
+uid="uid://dlr5etlbagwqr"
+path="res://.godot/imported/uipackSpace_sheet.png-063f5e65b221a4ef58ff152d3bcdbe4f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cursor_pointerFlat_shadow.png"
-dest_files=["res://.godot/imported/cursor_pointerFlat_shadow.png-5e9d490fa0576f548eed8f8a7e360412.ctex"]
+source_file="res://assets/sprites/uipackSpace_sheet.png"
+dest_files=["res://.godot/imported/uipackSpace_sheet.png-063f5e65b221a4ef58ff152d3bcdbe4f.ctex"]
 
 [params]
 
