@@ -25,7 +25,7 @@ class_name World
 @onready var camera = %Camera
 @onready var sfx_player = $SfxPlayer
 
-@export_range(1, 21) var winning_score: int = 1
+@export_range(1, 21) var winning_score: int = 3
 
 enum GameState {
 	READY,
@@ -48,7 +48,6 @@ var score_cpu: int = 0:
 	set(value):
 		score_cpu = value
 		lbl_cpu_score.text = str(score_cpu)
-
 
 
 func _ready():

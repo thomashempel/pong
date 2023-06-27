@@ -136,7 +136,6 @@ texture = ExtResource("3_ft572")
 position = Vector2(80, 540)
 
 [node name="Ball" parent="." instance=ExtResource("5_71pix")]
-visible = false
 position = Vector2(960, 540)
 
 [node name="CPU" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("3_q0gim")]
