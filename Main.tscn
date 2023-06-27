@@ -53,35 +53,8 @@ audio_start = ExtResource("4_sxxrc")
 audio_win = ExtResource("5_ibcup")
 audio_loose = ExtResource("6_3qcca")
 
-[node name="CrtShader" type="ColorRect" parent="."]
-visible = false
-top_level = true
-material = SubResource("ShaderMaterial_vw24b")
-offset_right = 1920.0
-offset_bottom = 1080.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
 [node name="UI" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
-
-[node name="WinScreen" parent="UI" instance=ExtResource("2_wmx2x")]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -132.0
-offset_top = -84.5
-offset_right = 132.0
-offset_bottom = 84.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MenuMain" parent="UI" instance=ExtResource("9_ym3ih")]
-unique_name_in_owner = true
 
 [node name="ScoreContainer" type="MarginContainer" parent="UI"]
 anchors_preset = 5
@@ -115,6 +88,36 @@ text = ":"
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = "0"
+
+[node name="Node" type="Node" parent="UI"]
+
+[node name="CrtShader" type="ColorRect" parent="UI/Node"]
+unique_name_in_owner = true
+visible = false
+top_level = true
+material = SubResource("ShaderMaterial_vw24b")
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="WinScreen" parent="UI" instance=ExtResource("2_wmx2x")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -84.5
+offset_right = 132.0
+offset_bottom = 84.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuMain" parent="UI" instance=ExtResource("9_ym3ih")]
+unique_name_in_owner = true
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"SFX"

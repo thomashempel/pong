@@ -90,7 +90,7 @@ func check_score(score: int, for_name: String):
 
 func _input(event):
 	if event.is_action_pressed("toggle_crt"):
-		$CrtShader.visible = not $CrtShader.visible
+		%CrtShader.visible = not %CrtShader.visible
 		
 	if event.is_action_released("ui_accept"):
 		if game_state == GameState.READY:
